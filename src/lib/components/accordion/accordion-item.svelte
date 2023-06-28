@@ -32,7 +32,10 @@
 </script>
 
 <div class="accordion-item">
-  <button on:click={handleClick} class="accordion-toggle">
+  <button on:click={handleClick} class="accordion-toggle"
+    aria-expanded={isOpen}
+    aria-controls="accordion-{componentId}"
+  >
     <div class="accordion-title">
       <slot name="title" />
     </div>
@@ -43,7 +46,11 @@
   </button>
   
   {#if isOpen}
-    <div transition:slide class="accordion-content">
+    <div transition:slide class="accordion-content"
+      role="region"
+      aria-hidden={!isOpen}
+      aria-labelledby="accordion-{componentId}"
+    >
       <slot name="content" />
     </div>
   {/if}
