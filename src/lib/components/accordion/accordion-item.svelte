@@ -1,17 +1,49 @@
-<script>
+<script lang="ts">
+  import { getContext } from 'svelte'
+	import { slide } from 'svelte/transition'
+
   export let open = true
+
+  const componentId = crypto.randomUUID()
+  const collapse = getContext('collapse')
+  const activeComponentId = getContext('active')
+
+	function setActive() {
+		// update the store value in the context
+		$activeComponentId = componentId
+	}
+
+	function toggleOpen() {
+		open = !open
+	}
+
+	function handleClick() {
+		// if `collapse` is passed only one item can be active
+		collapse ? setActive() : toggleOpen()
+	}
+
+	// the accordion item to be open by default
+	$: open && collapse && setActive()
+	// compare if the active id matches the component id
+	$: isActive = $activeComponentId === componentId
+	// if `collapse`, set one item as active, otherwise use `open`
+	$: isOpen = collapse ? isActive : open
+
 </script>
 
 <div class="accordion-item">
-  <button class="accordion-toggle">
+  <button on:click={handleClick} class="accordion-toggle">
     <div class="accordion-title">
       <slot name="title" />
     </div>
-    <div class="accordion-caret">👉</div>
+    <div 
+      class="accordion-caret"
+      class:open={isOpen}
+    >👉</div>
   </button>
   
-  {#if open}
-    <div class="accordion-content">
+  {#if isOpen}
+    <div transition:slide class="accordion-content">
       <slot name="content" />
     </div>
   {/if}

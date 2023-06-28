@@ -9,16 +9,11 @@
   ]
 </script>
 
-<Accordion>
-  <AccordionItem>
-    <div slot="title">Item 1</div>
-    <div slot="content">Content 1</div>
-  </AccordionItem>
-</Accordion>
-
-<Accordion>
-  <AccordionItem>
-    <div slot="title">Item 2</div>
-    <div slot="content">Content 2</div>
-  </AccordionItem>
+<Accordion collapse>
+	{#each items as item, i}
+		<AccordionItem open={i === 0}>
+			<svelte:fragment slot="title">{item.title}</svelte:fragment>
+			<svelte:fragment slot="content">{item.content}</svelte:fragment>
+		</AccordionItem>
+	{/each}
 </Accordion>
