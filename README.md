@@ -26,3 +26,16 @@ bootapp -l node -u moondevnode -n learn-svelte-ui_custom_component-youtube-ts -d
 # build
 yarn dev
 ```
+
+
+# Edit
+
+> `src/lib/components/accordion/index.ts`
+
+> `src/lib/components/accordion.svelte`
+
+> `src/lib/components/accordion-item.svelte`
+
+> `src/routes/+page.svelte`
+
+
